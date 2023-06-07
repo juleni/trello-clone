@@ -1,0 +1,14 @@
+Let’s build TRELLO 2.0 with REACT! (Next.js 13.4, GPT-4, Drag & Drop, Zustand, Appwrite Cloud, TS)
+--------------------------------------------------------------------------------------------------
+https://www.youtube.com/watch?v=TI2AvfCj5oM&ab_channel=SonnySangha  (4hod)
+- 33:48
+
+
+- npx create-next-app@latest
+- npm i @heroicons/react
+- npm i react-avatar --save
+
+
+Deploy react app to GitHub pages:
+---------------------------------
+https://www.makeuseof.com/how-to-deploy-react-app-with-github-pages/
