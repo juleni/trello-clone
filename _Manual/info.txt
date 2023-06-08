@@ -1,12 +1,17 @@
 Let’s build TRELLO 2.0 with REACT! (Next.js 13.4, GPT-4, Drag & Drop, Zustand, Appwrite Cloud, TS)
 --------------------------------------------------------------------------------------------------
 https://www.youtube.com/watch?v=TI2AvfCj5oM&ab_channel=SonnySangha  (4hod)
-- 33:48
+- 2:11:55
 
 
 - npx create-next-app@latest
 - npm i @heroicons/react
 - npm i react-avatar --save
+- npm i react-beautiful-dnd --save
+## fix error message from VSCode with following command
+- npm i --save-dev @types/react-beautiful-dnd 
+- npm i appwrite
+- npm i zustand
 
 
 Deploy react app to GitHub pages:
