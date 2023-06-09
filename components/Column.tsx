@@ -1,4 +1,5 @@
 "use client";
+import { useBoardStore } from "@/store/BoardStore";
 import { PlusCircleIcon } from "@heroicons/react/24/solid";
 import { Draggable, Droppable } from "react-beautiful-dnd";
 import TodoCard from "./TodoCard";
@@ -14,6 +15,8 @@ const idToColumnText: {
 } = { todo: "To Do", inprogress: "In Progress", done: "Done" };
 
 function Column({ id, todos, index }: Props) {
+  const [searchString] = useBoardStore((state) => [state.searchString]);
+
   return (
     <Draggable draggableId={id} index={index}>
       {(provided) => (
@@ -40,24 +43,35 @@ function Column({ id, todos, index }: Props) {
                 </h2>
                 {/** render draggable todo cards */}
                 <div className="space-y-2">
-                  {todos.map((todo, index) => (
-                    <Draggable
-                      key={todo.$id}
-                      draggableId={todo.$id}
-                      index={index}
-                    >
-                      {(provided) => (
-                        <TodoCard
-                          todo={todo}
-                          index={index}
-                          id={id}
-                          innerRef={provided.innerRef}
-                          draggableProps={provided.draggableProps}
-                          dragHandleProps={provided.dragHandleProps}
-                        />
-                      )}
-                    </Draggable>
-                  ))}
+                  {todos.map((todo, index) => {
+                    if (
+                      // hide todos that does not contain searchString within the title
+                      searchString &&
+                      !todo.title
+                        .toLowerCase()
+                        .includes(searchString.toLowerCase())
+                    )
+                      return null;
+
+                    return (
+                      <Draggable
+                        key={todo.$id}
+                        draggableId={todo.$id}
+                        index={index}
+                      >
+                        {(provided) => (
+                          <TodoCard
+                            todo={todo}
+                            index={index}
+                            id={id}
+                            innerRef={provided.innerRef}
+                            draggableProps={provided.draggableProps}
+                            dragHandleProps={provided.dragHandleProps}
+                          />
+                        )}
+                      </Draggable>
+                    );
+                  })}
 
                   {provided.placeholder}
 
