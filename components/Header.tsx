@@ -1,10 +1,9 @@
 "use client";
-
-import fetchSuggestion from "@/lib/fetchSuggestion";
+// import fetchSuggestion from "@/lib/fetchSuggestion";
 import { useBoardStore } from "@/store/BoardStore";
 import { MagnifyingGlassIcon, UserCircleIcon } from "@heroicons/react/24/solid";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Avatar from "react-avatar";
 
 function Header() {
@@ -16,6 +15,8 @@ function Header() {
   const [loading, setLoading] = useState<boolean>(false);
   const [suggestion, setSuggestion] = useState<string>("");
 
+  /**
+   * AI impl to header bar for chatbot messages
   useEffect(() => {
     if (board.columns.size === 0) return;
     setLoading(true);
@@ -28,6 +29,8 @@ function Header() {
 
     fetchSuggestionFunc();
   }, [board]);
+
+  */
 
   return (
     <header>
