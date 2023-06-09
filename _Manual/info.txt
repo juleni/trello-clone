@@ -1,7 +1,7 @@
 Let’s build TRELLO 2.0 with REACT! (Next.js 13.4, GPT-4, Drag & Drop, Zustand, Appwrite Cloud, TS)
 --------------------------------------------------------------------------------------------------
 https://www.youtube.com/watch?v=TI2AvfCj5oM&ab_channel=SonnySangha  (4hod)
-- 2:11:55
+- 2:27:33
 
 
 - npx create-next-app@latest
@@ -12,6 +12,7 @@ https://www.youtube.com/watch?v=TI2AvfCj5oM&ab_channel=SonnySangha  (4hod)
 - npm i --save-dev @types/react-beautiful-dnd 
 - npm i appwrite
 - npm i zustand
+- npm i openai
 
 
 Deploy react app to GitHub pages:
