@@ -6,11 +6,14 @@ import { DragDropContext, Droppable, DropResult } from "react-beautiful-dnd";
 import Column from "./Column";
 
 function Board() {
-  const [board, getBoard, setBoardState] = useBoardStore((state) => [
-    state.board,
-    state.getBoard,
-    state.setBoardState,
-  ]);
+  const [board, getBoard, setBoardState, updateTodoInDB] = useBoardStore(
+    (state) => [
+      state.board,
+      state.getBoard,
+      state.setBoardState,
+      state.updateTodoInDB,
+    ]
+  );
 
   useEffect(() => {
     getBoard();
@@ -34,8 +37,8 @@ function Board() {
 
     // This step is needed because indexes are stored as numbers 0,1,2,... instead of id's of DND library
     const columns = Array.from(board.columns);
-    const startColIndex = columns[Number(source.droppableId)];
-    const finishColIndex = columns[Number(destination.droppableId)];
+    const startColIndex = columns[Number(source.droppableId)]; // TODO: Check this: droppableId=board
+    const finishColIndex = columns[Number(destination.droppableId)]; //TODO: Check this: droppableId=board
 
     const startCol: Column = {
       id: startColIndex[0],
@@ -79,6 +82,10 @@ function Board() {
         id: finishCol.id,
         todos: finishTodos,
       });
+
+      // Update in DB
+      updateTodoInDB(todoMoved, finishCol.id);
+
       setBoardState({ ...board, columns: newColumns });
     }
   };
