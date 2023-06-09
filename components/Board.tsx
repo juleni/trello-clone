@@ -16,13 +16,8 @@ function Board() {
     getBoard();
   }, [getBoard]);
 
-  console.log(board);
-
   const handleOnDragEnd = (result: DropResult) => {
     const { destination, source, type } = result;
-    console.log(destination);
-    console.log(source);
-    console.log(type);
 
     // Check if user dragged card outside of board
     if (!destination) return;
@@ -35,6 +30,56 @@ function Board() {
       const rearrangedColumns = new Map(entries);
       // keep everything within the Board object and change only colums order
       setBoardState({ ...board, columns: rearrangedColumns });
+    }
+
+    // This step is needed because indexes are stored as numbers 0,1,2,... instead of id's of DND library
+    const columns = Array.from(board.columns);
+    const startColIndex = columns[Number(source.droppableId)];
+    const finishColIndex = columns[Number(destination.droppableId)];
+
+    const startCol: Column = {
+      id: startColIndex[0],
+      todos: startColIndex[1].todos,
+    };
+
+    const finishCol: Column = {
+      id: finishColIndex[0],
+      todos: finishColIndex[1].todos,
+    };
+
+    if (!startCol || !finishCol) return;
+    if (source.index === destination.index && startCol === finishCol) return;
+
+    const newTodos = startCol.todos;
+    const [todoMoved] = newTodos.splice(source.index, 1);
+
+    if (startCol.id === finishCol.id) {
+      // 1. Same column card dragged
+      newTodos.splice(destination.index, 0, todoMoved);
+      const newCol = {
+        id: startCol.id,
+        todos: newTodos,
+      };
+      // Create copy of the new columns map and set it to the board
+      const newColumns = new Map(board.columns);
+      newColumns.set(startCol.id, newCol);
+      setBoardState({ ...board, columns: newColumns });
+    } else {
+      // 2. Dragging to another column
+      const finishTodos = Array.from(finishCol.todos);
+      finishTodos.splice(destination.index, 0, todoMoved);
+      const newCol = {
+        id: startCol.id,
+        todos: newTodos,
+      };
+      // Create copy of the new columns map and set it to the board
+      const newColumns = new Map(board.columns);
+      newColumns.set(startCol.id, newCol);
+      newColumns.set(finishCol.id, {
+        id: finishCol.id,
+        todos: finishTodos,
+      });
+      setBoardState({ ...board, columns: newColumns });
     }
   };
 
