@@ -4,6 +4,7 @@ import { useBoardStore } from "@/store/BoardStore";
 import { useModalStore } from "@/store/ModalStore";
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment } from "react";
+import TaskTypeRadioGroup from "./TaskTypeRadioGroup";
 
 /**
  * Boiler code copied from https://headlessui.com/react/dialog  ... Transition part
@@ -59,7 +60,7 @@ function Modal() {
                   Add a Task
                 </Dialog.Title>
 
-                {/* Input field for  */}
+                {/* Input field for Task/ToDo */}
                 <div className="mt-2">
                   <input
                     type="text"
@@ -69,6 +70,9 @@ function Modal() {
                     className="w-full border border-gray-300 rounded-md outline-none p-5"
                   />
                 </div>
+
+                {/* Show radio group of Task Types */}
+                <TaskTypeRadioGroup />
               </Dialog.Panel>
             </Transition.Child>
           </div>
