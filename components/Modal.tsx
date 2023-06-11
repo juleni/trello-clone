@@ -1,5 +1,6 @@
 "use client";
 
+import { useBoardStore } from "@/store/BoardStore";
 import { useModalStore } from "@/store/ModalStore";
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment } from "react";
@@ -8,6 +9,10 @@ import { Fragment } from "react";
  * Boiler code copied from https://headlessui.com/react/dialog  ... Transition part
  */
 function Modal() {
+  const [newTaskInput, setNewTaskInput] = useBoardStore((state) => [
+    state.newTaskInput,
+    state.setNewTaskInput,
+  ]);
   const [isOpen, closeModal] = useModalStore((state) => [
     state.isOpen,
     state.closeModal,
@@ -54,7 +59,16 @@ function Modal() {
                   Add a Task
                 </Dialog.Title>
 
-                {/* ... */}
+                {/* Input field for  */}
+                <div className="mt-2">
+                  <input
+                    type="text"
+                    value={newTaskInput}
+                    onChange={(e) => setNewTaskInput(e.target.value)}
+                    placeholder="Enter a task ..."
+                    className="w-full border border-gray-300 rounded-md outline-none p-5"
+                  />
+                </div>
               </Dialog.Panel>
             </Transition.Child>
           </div>
