@@ -5,7 +5,7 @@ import { useModalStore } from "@/store/ModalStore";
 import { Dialog, Transition } from "@headlessui/react";
 import PhotoIcon from "@heroicons/react/24/solid/PhotoIcon";
 import Image from "next/image";
-import { Fragment, useRef } from "react";
+import { FormEvent, Fragment, useRef } from "react";
 import TaskTypeRadioGroup from "./TaskTypeRadioGroup";
 
 /**
@@ -14,23 +14,39 @@ import TaskTypeRadioGroup from "./TaskTypeRadioGroup";
 function Modal() {
   const imagePickerRef = useRef<HTMLInputElement>(null);
 
-  const [image, setImage, newTaskInput, setNewTaskInput] = useBoardStore(
-    (state) => [
+  const [addTask, image, setImage, newTaskInput, setNewTaskInput, newTaskType] =
+    useBoardStore((state) => [
+      state.addTask,
       state.image,
       state.setImage,
       state.newTaskInput,
       state.setNewTaskInput,
-    ]
-  );
+      state.newTaskType,
+    ]);
   const [isOpen, closeModal] = useModalStore((state) => [
     state.isOpen,
     state.closeModal,
   ]);
 
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (!newTaskInput) return;
+    // Add Task
+    addTask(newTaskInput, newTaskType, image);
+
+    setImage(null);
+    closeModal();
+  };
+
   return (
     // Use the `Transition` component at the root level
     <Transition appear show={isOpen} as={Fragment}>
-      <Dialog as="form" className="relative z-10" onClose={closeModal}>
+      <Dialog
+        as="form"
+        className="relative z-10"
+        onSubmit={handleSubmit}
+        onClose={closeModal}
+      >
         {/*
           Use one Transition.Child to apply one transition to the backdrop...
         */}
