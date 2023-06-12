@@ -82,13 +82,13 @@ function Modal() {
                 {/* Show radio group of Task Types */}
                 <TaskTypeRadioGroup />
 
-                <div>
+                <div className="mt-2">
                   {/* Upload image button */}
                   <button
                     type="button"
                     onClick={() => imagePickerRef.current?.click()}
                     className="w-full border border-gray-300 rounded-md outline-none p-5 
-                    focus-visible: ring-2 focus-visible: ring-blue-500 focus-visible: ring-offset-2"
+                    focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
                   >
                     <PhotoIcon className="h-6 w-6 mr-2 inline-block" />
                     Upload Image
@@ -100,7 +100,7 @@ function Modal() {
                       alt="Uploaded image"
                       width={200}
                       height={200}
-                      className="w-full h-44 object-cover mt-2 filter hover: grayscale 
+                      className="w-full h-44 object-cover mt-2 filter hover:grayscale 
                         transition-all duration-150 cursor-not-allowed"
                       src={URL.createObjectURL(image)}
                       onClick={() => {
@@ -122,6 +122,19 @@ function Modal() {
                     placeholder="Enter a task ..."
                     className="w-full border border-gray-300 rounded-md outline-none p-5"
                   />
+                </div>
+                <div className="mt-4">
+                  <button
+                    type="submit"
+                    disabled={!newTaskInput}
+                    className="inline-flex justify-center rounded-md border border-transparent
+                    bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 
+                    focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 
+                    focus-visible:ring-offset-2 disabled:bg-gray-100 disabled:text-gray-300
+                    disabled:cursor-not-allowed"
+                  >
+                    Add Task
+                  </button>
                 </div>
               </Dialog.Panel>
             </Transition.Child>
