@@ -1,8 +1,6 @@
 Let’s build TRELLO 2.0 with REACT! (Next.js 13.4, GPT-4, Drag & Drop, Zustand, Appwrite Cloud, TS)
 --------------------------------------------------------------------------------------------------
 https://www.youtube.com/watch?v=TI2AvfCj5oM&ab_channel=SonnySangha  (4hod)
-- 2:59:10 
-
 
 - npx create-next-app@latest
 - npm i @heroicons/react
@@ -16,6 +14,18 @@ https://www.youtube.com/watch?v=TI2AvfCj5oM&ab_channel=SonnySangha  (4hod)
 - npm i @headlessui/react@latest
 
 
-Deploy react app to GitHub pages:
----------------------------------
-https://www.makeuseof.com/how-to-deploy-react-app-with-github-pages/
+Deploy to vercel: (from time 3:55:30)
+-------------------------------------
+- npm i -g vercel
+- vercel
+
+## Add variables from .env.local on
+## vercel.com website -> trello-clone -> Settings -> Environment Variables
+NEXT_PUBLIC_APPWRITE_PROJECT_ID=
+NEXT_PUBLIC_DATABASE_ID=
+NEXT_PUBLIC_TODOS_COLLECTION_ID=
+OPENAI_API_KEY=
+
+## Update hostname on 
+## cloud.appwrite.io -> Overview -> trello-clone Platform -> Update Hostname
+trello-clone-juleni.vercel.app
