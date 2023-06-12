@@ -3,17 +3,25 @@
 import { useBoardStore } from "@/store/BoardStore";
 import { useModalStore } from "@/store/ModalStore";
 import { Dialog, Transition } from "@headlessui/react";
-import { Fragment } from "react";
+import PhotoIcon from "@heroicons/react/24/solid/PhotoIcon";
+import Image from "next/image";
+import { Fragment, useRef } from "react";
 import TaskTypeRadioGroup from "./TaskTypeRadioGroup";
 
 /**
  * Boiler code copied from https://headlessui.com/react/dialog  ... Transition part
  */
 function Modal() {
-  const [newTaskInput, setNewTaskInput] = useBoardStore((state) => [
-    state.newTaskInput,
-    state.setNewTaskInput,
-  ]);
+  const imagePickerRef = useRef<HTMLInputElement>(null);
+
+  const [image, setImage, newTaskInput, setNewTaskInput] = useBoardStore(
+    (state) => [
+      state.image,
+      state.setImage,
+      state.newTaskInput,
+      state.setNewTaskInput,
+    ]
+  );
   const [isOpen, closeModal] = useModalStore((state) => [
     state.isOpen,
     state.closeModal,
@@ -73,6 +81,48 @@ function Modal() {
 
                 {/* Show radio group of Task Types */}
                 <TaskTypeRadioGroup />
+
+                <div>
+                  {/* Upload image button */}
+                  <button
+                    type="button"
+                    onClick={() => imagePickerRef.current?.click()}
+                    className="w-full border border-gray-300 rounded-md outline-none p-5 
+                    focus-visible: ring-2 focus-visible: ring-blue-500 focus-visible: ring-offset-2"
+                  >
+                    <PhotoIcon className="h-6 w-6 mr-2 inline-block" />
+                    Upload Image
+                  </button>
+
+                  {/* Image preview */}
+                  {image && (
+                    <Image
+                      alt="Uploaded image"
+                      width={200}
+                      height={200}
+                      className="w-full h-44 object-cover mt-2 filter hover: grayscale 
+                        transition-all duration-150 cursor-not-allowed"
+                      src={URL.createObjectURL(image)}
+                      onClick={() => {
+                        setImage(null);
+                      }}
+                    />
+                  )}
+
+                  {/* Upload image input reference*/}
+                  <input
+                    type="file"
+                    hidden
+                    ref={imagePickerRef}
+                    onChange={(e) => {
+                      // check e is an image
+                      if (!e.target.files![0].type.startsWith("image/")) return;
+                      setImage(e.target.files![0]);
+                    }}
+                    placeholder="Enter a task ..."
+                    className="w-full border border-gray-300 rounded-md outline-none p-5"
+                  />
+                </div>
               </Dialog.Panel>
             </Transition.Child>
           </div>
